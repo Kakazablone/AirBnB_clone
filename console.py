@@ -7,7 +7,7 @@ import cmd
 class HBNBCommand(cmd.Cmd):
     """The command line interpreter"""
 
-    prompt = '(hbnb)'
+    prompt = '(hbnb) '
 
     def do_EOF(self, line):
         """ Exit at EOF"""
