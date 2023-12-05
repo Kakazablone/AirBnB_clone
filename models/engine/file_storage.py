@@ -25,6 +25,7 @@ class FileStorage:
             json.dump(obj_dict, f, ensure_ascii=False, indent=4)
 
     def reload(self):
+
         try:
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 obj_dict = json.load(f)
