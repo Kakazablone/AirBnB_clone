@@ -1,20 +1,4 @@
 {
-    "BaseModel.d5a5cae5-b2c5-48db-9d05-78a19ebce9a9": {
-        "id": "d5a5cae5-b2c5-48db-9d05-78a19ebce9a9",
-        "created_at": "2023-12-05T09:24:39.321070",
-        "updated_at": "2023-12-05T09:24:39.321087",
-        "name": "My_First_Model",
-        "my_number": 89,
-        "__class__": "BaseModel"
-    },
-    "BaseModel.02d5b575-4616-4c02-a317-a876eae8ae0a": {
-        "id": "02d5b575-4616-4c02-a317-a876eae8ae0a",
-        "created_at": "2023-12-05T09:42:20.021003",
-        "updated_at": "2023-12-05T09:42:20.021012",
-        "name": "My_First_Model",
-        "my_number": 89,
-        "__class__": "BaseModel"
-    },
     "BaseModel.d16a0c43-0a86-493d-a08d-ab9a082dbd36": {
         "id": "d16a0c43-0a86-493d-a08d-ab9a082dbd36",
         "created_at": "2023-12-05T09:46:03.330844",
