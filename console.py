@@ -3,6 +3,8 @@
 import models
 import cmd
 import shlex
+from models import storage
+
 
 class HBNBCommand(cmd.Cmd):
     """The command line interpreter"""
@@ -26,10 +28,10 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BM, saves to JSON and prints the id """
         if not line:
             print("** class name missing **")
-        elif line not in models.classes:
+        elif line not in storage.classes:
             print("** class doesn't exist **")
         else:
-            result = models.classes[line]()
+            result = storage.classes[line]()
             models.storage.save()
             print(result.id)
 
@@ -38,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
         line = shlex.split(line)
         if len(line) == 0:
             print("** class name missing **")
-        elif line[0] not in models.classes:
+        elif line[0] not in storage.classes:
             print("** class doesn't exist **")
         elif len(line) == 1:
             print("** instance id missing **")
@@ -55,7 +57,7 @@ class HBNBCommand(cmd.Cmd):
         line = shlex.split(line)
         if len(line) == 0:
             print("** class name missing **")
-        elif line[0] not in models.classes:
+        elif line[0] not in storage.classes:
             print("** class doesn't exist **")
         elif len(line) == 1:
             print("** instance id missing **")
@@ -77,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in temp_dict.items():
                 object_list.append(str(value))
             print(object_list)
-        elif line[0] not in models.classes:
+        elif line[0] not in storage.classes:
             print("** class doesn't exist **")
         else:
             for key, value in temp_dict.items():
@@ -90,7 +92,7 @@ class HBNBCommand(cmd.Cmd):
         line = shlex.split(line)
         if len(line) == 0:
             print("** class name missing **")
-        elif line[0] not in models.classes:
+        elif line[0] not in storage.classes:
             print("** class doesn't exist **")
         elif len(line) == 1:
             print("** instance id missing **")

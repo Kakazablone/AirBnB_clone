@@ -1,10 +1,1 @@
-{
-    "BaseModel.d16a0c43-0a86-493d-a08d-ab9a082dbd36": {
-        "id": "d16a0c43-0a86-493d-a08d-ab9a082dbd36",
-        "created_at": "2023-12-05T09:46:03.330844",
-        "updated_at": "2023-12-05T09:46:03.330853",
-        "name": "My_First_Model",
-        "my_number": 89,
-        "__class__": "BaseModel"
-    }
-}
+{}
