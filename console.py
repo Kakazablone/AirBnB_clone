@@ -121,7 +121,15 @@ class HBNBCommand(cmd.Cmd):
                 if match and match.group(1) in ['create', 'count', 'show',
                                                 'destroy', 'update', 'all']:
                     action, args = match.groups()
-                    return "{} {} {}".format(action, class_name, args.strip())
+                    args_list = [arg.strip() for arg in args.split(',')]
+                    if action == 'update' and len(args_list) == 3:
+                        return "{} {} {} {} {}".format(action, class_name,
+                                                       args_list[0],
+                                                       args_list[1],
+                                                       args_list[2])
+                    else:
+                        return "{} {} {}".format(action, class_name,
+                                                 args.strip())
         return line
 
     def do_count(self, line):
