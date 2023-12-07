@@ -24,14 +24,17 @@ class FileStorage:
             json.dump(obj_dict, f, ensure_ascii=False, indent=4)
 
     def reload(self):
-
         try:
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 obj_dict = json.load(f)
                 for key, value in obj_dict.items():
                     class_name, obj_id = key.split('.')
-                    obj_instance = eval(class_name)(**value)
-                    self.__objects[key] = obj_instance
+                    if class_name in self.classes:
+                        obj_class = self.classes[class_name]
+                        obj_instance = obj_class(**value)
+                        self.__objects[key] = obj_instance
+                    else:
+                        print(f"Warning: Class {class_name} not found")
         except FileNotFoundError:
             pass
 

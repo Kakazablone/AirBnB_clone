@@ -110,6 +110,28 @@ class HBNBCommand(cmd.Cmd):
                 setattr(value, line[2], line[3])
                 models.storage.save()
 
+    def precmd(self, line):
+        """Preprocess the command before calling the do_* method."""
+        words = shlex.split(line)
+        if words and len(words) == 3 and words[1] == 'count'\
+                and words[2] == '()':
+            return "count {}".format(words[0])
+        return line
+
+    def do_count(self, line):
+        """Count the instances of a class."""
+        words = line.split()
+
+        if not words:
+            print("** class name missing **")
+        elif words[0] not in storage.classes:
+            print("** class doesn't exist **")
+        else:
+            class_name = words[0]
+            instances = [k for k in storage.all() if k.startswith
+                         ("{}.".format(class_name))]
+            print(len(instances))
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
