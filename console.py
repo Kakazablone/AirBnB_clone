@@ -4,6 +4,7 @@ import models
 import cmd
 import shlex
 from models import storage
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -112,10 +113,15 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Preprocess the command before calling the do_* method."""
-        words = shlex.split(line)
-        if words and len(words) == 3 and words[1] == 'count'\
-                and words[2] == '()':
-            return "count {}".format(words[0])
+        parts = line.split('.')
+        if len(parts) == 2:
+            class_name, action_with_args = (part.strip() for part in parts)
+            if class_name in storage.classes:
+                match = re.match(r'(\w+)\((.*)\)', action_with_args)
+                if match and match.group(1) in ['create', 'count', 'show',
+                                                'destroy', 'update', 'all']:
+                    action, args = match.groups()
+                    return "{} {} {}".format(action, class_name, args.strip())
         return line
 
     def do_count(self, line):
