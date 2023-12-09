@@ -118,16 +118,18 @@ class HBNBCommand(cmd.Cmd):
         if len(parts) == 2:
             class_name, action_with_args = (part.strip() for part in parts)
 
-            if class_name in storage.classes:  # Make sure to define storage.classes
-                match = re.match(r'(\w+)\(([^,]*)(?:,(.*))?\)', action_with_args)
-                if match and match.group(1) in ['create', 'count', 'show', 'destroy', 'update', 'all']:
+            if class_name in storage.classes:
+                match = re.match(r'(\w+)\(([^,]*)(?:,(.*))?\)',
+                                 action_with_args)
+                if match and match.group(1) in ['create', 'count', 'show',
+                                                'destroy', 'update', 'all']:
                     action, object_id, args = match.groups()
                     object_id = object_id.strip()
                     args = args.strip() if args else ''
 
                     # Check if the argument is a dictionary
                     if '{' in args and '}' in args:
-                        # Fix: Replace single quotes with double quotes in the dictionary
+                        # Replace single quotes with double quotes in dict
                         args = args.replace("'", "\"")
 
                         # Safely parse the dictionary using json.loads
@@ -137,8 +139,14 @@ class HBNBCommand(cmd.Cmd):
                                 # Extract key-value pairs from the dictionary
                                 key_value_pairs = arg_dict.items()
 
-                                # Iterate over key-value pairs and return formatted strings
-                                formatted_args = " ".join("{} {} {} {} {}".format(action, class_name, object_id, key, value) for key, value in key_value_pairs)
+                                # Iterate over key-value pairs
+                                formatted_args = " ".join("{} {} {} {} {}"
+                                                          .format(action,
+                                                                  class_name,
+                                                                  object_id,
+                                                                  key, value)
+                                                          for key, value in
+                                                          key_value_pairs)
                                 return formatted_args
                             else:
                                 print("Not a valid dictionary")
@@ -147,10 +155,15 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         args_list = [arg.strip() for arg in args.split(',')]
                         if action == 'update' and len(args_list) == 3:
-                            return "{} {} {} {} {}".format(action, class_name, object_id, args_list[0], args_list[1])
+                            return "{} {} {} {} {}".format(action, class_name,
+                                                           object_id,
+                                                           args_list[0],
+                                                           args_list[1])
                         else:
                             if args_list:
-                                return "{} {} {}".format(action, class_name, object_id)
+                                return "{} {} {}".format(action,
+                                                         class_name,
+                                                         object_id)
                             else:
                                 return "{} {}".format(action, class_name)
         return line

@@ -1,1 +1,9 @@
-{}
+{
+    "User.209ad89a-418d-41f5-af90-a0f5858feef5": {
+        "id": "209ad89a-418d-41f5-af90-a0f5858feef5",
+        "created_at": "2023-12-08T23:52:48.319405",
+        "updated_at": "2023-12-08T23:52:48.319410",
+        "first_name": "John",
+        "__class__": "User"
+    }
+}
