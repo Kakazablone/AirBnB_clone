@@ -1,5 +1,5 @@
 import unittest
-from models import storage
+import models
 from datetime import datetime
 from models.base_model import BaseModel
 
