@@ -5,6 +5,7 @@ import cmd
 import shlex
 from models import storage
 import re
+import json
 
 
 class HBNBCommand(cmd.Cmd):
@@ -116,20 +117,42 @@ class HBNBCommand(cmd.Cmd):
         parts = line.split('.')
         if len(parts) == 2:
             class_name, action_with_args = (part.strip() for part in parts)
-            if class_name in storage.classes:
-                match = re.match(r'(\w+)\((.*)\)', action_with_args)
-                if match and match.group(1) in ['create', 'count', 'show',
-                                                'destroy', 'update', 'all']:
-                    action, args = match.groups()
-                    args_list = [arg.strip() for arg in args.split(',')]
-                    if action == 'update' and len(args_list) == 3:
-                        return "{} {} {} {} {}".format(action, class_name,
-                                                       args_list[0],
-                                                       args_list[1],
-                                                       args_list[2])
+
+            if class_name in storage.classes:  # Make sure to define storage.classes
+                match = re.match(r'(\w+)\(([^,]*)(?:,(.*))?\)', action_with_args)
+                if match and match.group(1) in ['create', 'count', 'show', 'destroy', 'update', 'all']:
+                    action, object_id, args = match.groups()
+                    object_id = object_id.strip()
+                    args = args.strip() if args else ''
+
+                    # Check if the argument is a dictionary
+                    if '{' in args and '}' in args:
+                        # Fix: Replace single quotes with double quotes in the dictionary
+                        args = args.replace("'", "\"")
+
+                        # Safely parse the dictionary using json.loads
+                        try:
+                            arg_dict = json.loads(args)
+                            if isinstance(arg_dict, dict):
+                                # Extract key-value pairs from the dictionary
+                                key_value_pairs = arg_dict.items()
+
+                                # Iterate over key-value pairs and return formatted strings
+                                formatted_args = " ".join("{} {} {} {} {}".format(action, class_name, object_id, key, value) for key, value in key_value_pairs)
+                                return formatted_args
+                            else:
+                                print("Not a valid dictionary")
+                        except json.JSONDecodeError as e:
+                            print(f"Error decoding JSON: {e}")
                     else:
-                        return "{} {} {}".format(action, class_name,
-                                                 args.strip())
+                        args_list = [arg.strip() for arg in args.split(',')]
+                        if action == 'update' and len(args_list) == 3:
+                            return "{} {} {} {} {}".format(action, class_name, object_id, args_list[0], args_list[1])
+                        else:
+                            if args_list:
+                                return "{} {} {}".format(action, class_name, object_id)
+                            else:
+                                return "{} {}".format(action, class_name)
         return line
 
     def do_count(self, line):
