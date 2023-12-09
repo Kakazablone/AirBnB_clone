@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 '''
+<<<<<<< HEAD
 ata hii comment ni lazima?
+=======
+hii ni ya tatu
+>>>>>>> muhindi
 '''
 from datetime import datetime
 import uuid
@@ -9,12 +13,20 @@ import models
 
 class BaseModel:
     '''
+<<<<<<< HEAD
     module ile haipatikani
+=======
+    basemodel ipatikane
+>>>>>>> muhindi
     '''
 
     def __init__(self, *args, **kwargs):
         '''
+<<<<<<< HEAD
         initialization ya class
+=======
+        init ya class
+>>>>>>> muhindi
         '''
         if kwargs:
             for key, value in kwargs.items():
@@ -34,7 +46,11 @@ class BaseModel:
 
     def save(self):
         '''
+<<<<<<< HEAD
         saving mod
+=======
+        save ya samba
+>>>>>>> muhindi
         '''
         self.updated_at = datetime.now()
         models.storage.save()
@@ -52,7 +68,11 @@ class BaseModel:
 
     def __str__(self):
         '''
+<<<<<<< HEAD
         string rep
+=======
+        string iso print
+>>>>>>> muhindi
         '''
         class_name = type(self).__name__
 

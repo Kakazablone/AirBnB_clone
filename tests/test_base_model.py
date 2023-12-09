@@ -5,8 +5,10 @@ from models.base_model import BaseModel
 
 
 class TestBaseModel(unittest.TestCase):
+    '''class def'''
 
     def test_instance_creation(self):
+        ''' method define '''
         instance = BaseModel()
         self.assertIsInstance(instance, BaseModel)
         self.assertTrue(hasattr(instance, 'id'))
@@ -17,12 +19,14 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(isinstance(instance.updated_at, datetime))
 
     def test_str_representation(self):
+        ''' method define '''
         instance = BaseModel()
         string_representation = str(instance)
         self.assertIn(instance.id, string_representation)
         self.assertIn(str(type(instance).__name__), string_representation)
 
     def test_save_method(self):
+        ''' method define '''
         instance = BaseModel()
         old_updated_at = instance.updated_at
         instance.save()
@@ -30,6 +34,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(old_updated_at, new_updated_at)
 
     def test_to_dict_method(self):
+        ''' method define '''
         instance = BaseModel()
         instance_dict = instance.to_dict()
         self.assertIsInstance(instance_dict, dict)
@@ -38,6 +43,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn('updated_at', instance_dict)
 
     def test_deserialization_from_dict(self):
+        ''' method define '''
         instance = BaseModel()
         instance_dict = instance.to_dict()
         new_instance = BaseModel(**instance_dict)
