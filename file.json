@@ -70,5 +70,12 @@
         "created_at": "2023-12-09T01:54:34.727374",
         "updated_at": "2023-12-09T01:54:34.727377",
         "__class__": "BaseModel"
+    },
+    "User.8a5b209c-8c7c-4133-b34b-fbfbc4211549": {
+        "id": "8a5b209c-8c7c-4133-b34b-fbfbc4211549",
+        "created_at": "2023-12-09T09:17:31.042622",
+        "updated_at": "2023-12-09T09:17:31.042627",
+        "first_name": "John",
+        "__class__": "User"
     }
 }

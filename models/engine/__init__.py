@@ -1,2 +1,1 @@
-
-
+"""Initializes File storage Module"""

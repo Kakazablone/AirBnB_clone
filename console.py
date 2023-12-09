@@ -129,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
 
                     # Check if the argument is a dictionary
                     if '{' in args and '}' in args:
-                        # Replace single quotes with double quotes in dict
+                        # Replace single quotes with double quotes-dictionary
                         args = args.replace("'", "\"")
 
                         # Safely parse the dictionary using json.loads
@@ -138,16 +138,14 @@ class HBNBCommand(cmd.Cmd):
                             if isinstance(arg_dict, dict):
                                 # Extract key-value pairs from the dictionary
                                 key_value_pairs = arg_dict.items()
-
-                                # Iterate over key-value pairs
-                                formatted_args = " ".join("{} {} {} {} {}"
-                                                          .format(action,
-                                                                  class_name,
-                                                                  object_id,
-                                                                  key, value)
-                                                          for key, value in
-                                                          key_value_pairs)
-                                return formatted_args
+                                # Iterate over key-value pairs & call update
+                                saved_list = (["[[{}] [{}] [{}] [{}] [{}]]"
+                                              .format(action, class_name,
+                                               object_id, key, value) for key,
+                                               value in key_value_pairs])
+                                self.do_update_list(saved_list)
+                                # prevent the original command from executing
+                                return ""
                             else:
                                 print("Not a valid dictionary")
                         except json.JSONDecodeError as e:
@@ -161,8 +159,7 @@ class HBNBCommand(cmd.Cmd):
                                                            args_list[1])
                         else:
                             if args_list:
-                                return "{} {} {}".format(action,
-                                                         class_name,
+                                return "{} {} {}".format(action, class_name,
                                                          object_id)
                             else:
                                 return "{} {}".format(action, class_name)
@@ -181,6 +178,21 @@ class HBNBCommand(cmd.Cmd):
             instances = [k for k in storage.all() if k.startswith
                          ("{}.".format(class_name))]
             print(len(instances))
+
+    def do_update_list(self, saved_list):
+        """Update instance based on a list of lists-update arguments"""
+        for args_str in saved_list:
+            args = args_str.replace('[', '')\
+                    .replace(']', '').replace('][', ' ').split(' ')
+            if len(args) == 5:
+                # Extract elements from the sublist
+                action, class_name, object_id, key, value = args
+
+                # Create a line from the extracted elements and call do_update
+                line = "{} {} {} {}".format(class_name, object_id, key, value)
+                self.do_update(line)
+            else:
+                print("** Invalid no of elements in update argument list **")
 
 
 if __name__ == '__main__':
