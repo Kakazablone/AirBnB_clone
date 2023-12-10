@@ -182,6 +182,12 @@ class HBNBCommand(cmd.Cmd):
                                               .format(line))
                             else:
                                 print("***Unknown syntax: {}".format(line))
+                else:
+                    print("***Unknown syntax: {}".format(line))
+            else:
+                print("***Unknown syntax: {}".format(line))
+        else:
+            print("***Unknown syntax: {}".format(line))
 
     def do_count(self, line):
         """Count the instances of a class."""
