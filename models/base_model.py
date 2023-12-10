@@ -1,33 +1,18 @@
 #!/usr/bin/python3
-'''
-<<<<<<< HEAD
-ata hii comment ni lazima?
-=======
-hii ni ya tatu
->>>>>>> muhindi
-'''
+"""BaseModel Module that all other classes will inherit from"""
 from datetime import datetime
 import uuid
 import models
 
 
 class BaseModel:
-    '''
-<<<<<<< HEAD
-    module ile haipatikani
-=======
-    basemodel ipatikane
->>>>>>> muhindi
-    '''
-
+    """The defined BaseModel class"""
     def __init__(self, *args, **kwargs):
-        '''
-<<<<<<< HEAD
-        initialization ya class
-=======
-        init ya class
->>>>>>> muhindi
-        '''
+        """Initializes an instance of the class in two ways;
+        1. If the user provides kwargs &
+        2. Where no kwargs are provided.
+        ATTRIBUTES: these include id (UUID), created at and
+        updated at"""
         if kwargs:
             for key, value in kwargs.items():
                 if key == 'created_at':
@@ -45,20 +30,14 @@ class BaseModel:
             models.storage.new(self)
 
     def save(self):
-        '''
-<<<<<<< HEAD
-        saving mod
-=======
-        save ya samba
->>>>>>> muhindi
-        '''
+        """Saves an any created instance by first ensuring
+        that time is current and then uses the storage method
+        to store the instance in JSON format"""
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        '''
-        dictionary rep
-        '''
+        """Defines storage format of dictionary"""
         dictionary = self.__dict__.copy()
         dictionary["__class__"] = type(self).__name__
         dictionary["created_at"] = self.created_at.isoformat()
@@ -67,13 +46,7 @@ class BaseModel:
         return dictionary
 
     def __str__(self):
-        '''
-<<<<<<< HEAD
-        string rep
-=======
-        string iso print
->>>>>>> muhindi
-        '''
+        """The string representation of any instance"""
         class_name = type(self).__name__
 
         return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
