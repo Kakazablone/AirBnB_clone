@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """File storage Module"""
 import json
+from collections import OrderedDict
 
 
 class FileStorage:
@@ -25,7 +26,7 @@ class FileStorage:
     def save(self):
         """Dump the instance in Json format"""
         with open(self.__file_path, 'w', encoding='utf-8') as f:
-            obj_dict = {}
+            obj_dict = OrderedDict()
             for key, value in self.__objects.items():
                 obj_dict[key] = value.to_dict()
             json.dump(obj_dict, f, ensure_ascii=False, indent=4)
