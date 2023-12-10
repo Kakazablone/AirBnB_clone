@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """File storage Module"""
 import json
+from collections import OrderedDict
+from os import path
 
 
 class FileStorage:
@@ -23,17 +25,17 @@ class FileStorage:
         self.__objects[key] = obj
 
     def save(self):
-        """Dump the instance in Json format"""
+        """Serializes the instance in Json format"""
+        obj_dict = OrderedDict()
+        for key, value in self.__objects.items():
+            obj_dict[key] = value.to_dict()
         with open(self.__file_path, 'w', encoding='utf-8') as f:
-            obj_dict = {}
-            for key, value in self.__objects.items():
-                obj_dict[key] = value.to_dict()
             json.dump(obj_dict, f, ensure_ascii=False, indent=4)
 
     def reload(self):
-        """Reloads the JSON instances that had
+        """Deserializes the JSON instances that had
         been saved previously"""
-        try:
+        if path.exists(self.__file_path):
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 obj_dict = json.load(f)
                 for key, value in obj_dict.items():
@@ -44,8 +46,6 @@ class FileStorage:
                         self.__objects[key] = obj_instance
                     else:
                         print(f"Warning: Class {class_name} not found")
-        except FileNotFoundError:
-            pass
 
     @property
     def classes(self):
