@@ -112,7 +112,7 @@ class HBNBCommand(cmd.Cmd):
                 setattr(value, line[2], line[3])
                 models.storage.save()
 
-    def precmd(self, line):
+    def default(self, line):
         """Preprocess the command before calling the do_* method."""
         parts = line.split('.')
         if len(parts) == 2:
@@ -124,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
                 if match and match.group(1) in ['create', 'count', 'show',
                                                 'destroy', 'update', 'all']:
                     action, object_id, args = match.groups()
-                    object_id = object_id.strip()
+                    object_id = object_id.strip() if object_id else ''
                     args = args.strip() if args else ''
 
                     # Check if the argument is a dictionary
@@ -153,17 +153,33 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         args_list = [arg.strip() for arg in args.split(',')]
                         if action == 'update' and len(args_list) == 2:
-                            return "{} {} {} {} {}".format(action, class_name,
-                                                           object_id,
-                                                           args_list[0],
-                                                           args_list[1])
+                            line = "{} {} {} {}".format(class_name,
+                                                        object_id,
+                                                        args_list[0],
+                                                        args_list[1])
+                            self.do_update(line)
                         else:
                             if args_list:
-                                return "{} {} {}".format(action, class_name,
-                                                         object_id)
+                                line = "{} {}".format(class_name, object_id)
+                                if action == 'show':
+                                    self.do_show(line)
+                                elif action == 'count':
+                                    self.do_count(line)
+                                elif action == 'destroy':
+                                    self.do_destroy(line)
+                                elif action == 'update':
+                                    self.do_update(line)
+                                else:
+                                    line = class_name
+                                    if action == 'create':
+                                        self.do_create(line)
+                                    elif action == 'count':
+                                        self.do_count(line)
+                                    else:
+                                        print("***Unknown syntax: {}"
+                                              .format(line))
                             else:
-                                return "{} {}".format(action, class_name)
-        return line
+                                print("***Unknown syntax: {}".format(line))
 
     def do_count(self, line):
         """Count the instances of a class."""
@@ -180,7 +196,8 @@ class HBNBCommand(cmd.Cmd):
             print(len(instances))
 
     def do_update_list(self, saved_list):
-        """Update instance based on a list of lists-update arguments"""
+        """Helper function for updating an instance based
+        on its ID with a dictionary"""
         for args_str in saved_list:
             args = args_str.replace('[', '')\
                     .replace(']', '').replace('][', ' ').split(' ')
