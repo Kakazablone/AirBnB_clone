@@ -1,22 +1,26 @@
 #!/usr/bin/python3
-"""
-commenty
-"""
+"""File storage Module"""
 import json
 
 
 class FileStorage:
+    """Class that defines the storage methods. It has two
+    private global attributes"""
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
+        """Returns all instances, in dictionary format,
+        that have been stored previously"""
         return self.__objects
 
     def new(self, obj):
+        """Adds a new object to the dictionary"""
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         self.__objects[key] = obj
 
     def save(self):
+        """Dump the instance in Json format"""
         with open(self.__file_path, 'w', encoding='utf-8') as f:
             obj_dict = {}
             for key, value in self.__objects.items():
@@ -24,6 +28,8 @@ class FileStorage:
             json.dump(obj_dict, f, ensure_ascii=False, indent=4)
 
     def reload(self):
+        """Reloads the JSON instances that had
+        been saved previously"""
         try:
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 obj_dict = json.load(f)
