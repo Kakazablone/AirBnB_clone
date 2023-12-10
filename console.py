@@ -175,6 +175,8 @@ class HBNBCommand(cmd.Cmd):
                                         self.do_create(line)
                                     elif action == 'count':
                                         self.do_count(line)
+                                    elif action == 'all':
+                                        self.do_all(line)
                                     else:
                                         print("***Unknown syntax: {}"
                                               .format(line))
