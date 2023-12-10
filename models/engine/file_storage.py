@@ -30,6 +30,9 @@ class FileStorage:
         for key, value in self.__objects.items():
             obj_dict[key] = value.to_dict()
         with open(self.__file_path, 'w', encoding='utf-8') as f:
+            obj_dict = OrderedDict()
+            for key, value in self.__objects.items():
+                obj_dict[key] = value.to_dict()
             json.dump(obj_dict, f, ensure_ascii=False, indent=4)
 
     def reload(self):
