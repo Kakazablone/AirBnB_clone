@@ -5,7 +5,10 @@ import json
 
 class FileStorage:
     """Class that defines the storage methods. It has two
-    private global attributes"""
+    private global attributes;
+    file_path (str): path to the JSON file
+    objects (dict): stores all objects by class"""
+
     __file_path = "file.json"
     __objects = {}
 

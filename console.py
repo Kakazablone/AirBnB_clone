@@ -152,7 +152,7 @@ class HBNBCommand(cmd.Cmd):
                             print(f"Error decoding JSON: {e}")
                     else:
                         args_list = [arg.strip() for arg in args.split(',')]
-                        if action == 'update' and len(args_list) == 3:
+                        if action == 'update' and len(args_list) == 2:
                             return "{} {} {} {} {}".format(action, class_name,
                                                            object_id,
                                                            args_list[0],
