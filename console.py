@@ -159,27 +159,22 @@ class HBNBCommand(cmd.Cmd):
                                                         args_list[1])
                             self.do_update(line)
                         else:
-                            if args_list:
-                                line = "{} {}".format(class_name, object_id)
-                                if action == 'show':
-                                    self.do_show(line)
-                                elif action == 'count':
-                                    self.do_count(line)
-                                elif action == 'destroy':
-                                    self.do_destroy(line)
-                                elif action == 'update':
-                                    self.do_update(line)
-                                else:
-                                    line = class_name
-                                    if action == 'create':
-                                        self.do_create(line)
-                                    elif action == 'count':
-                                        self.do_count(line)
-                                    elif action == 'all':
-                                        self.do_all(line)
-                                    else:
-                                        print("***Unknown syntax: {}"
-                                              .format(line))
+                            line = "{} {}".format(class_name, object_id)
+                            if action == 'destroy':
+                                self.do_destroy(line)
+                            elif action == 'show':
+                                self.do_show(line)
+                            elif action == 'update':
+                                self.do_update(line)
+                            elif action == 'count':
+                                line = class_name
+                                self.do_count(line)
+                            elif action == 'all':
+                                line = class_name
+                                self.do_all(line)
+                            elif action == 'create':
+                                line = class_name
+                                self.do_create(line)
                             else:
                                 print("***Unknown syntax: {}".format(line))
                 else:
