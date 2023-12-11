@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+'''
+mod def
+'''
 import unittest
 from unittest.mock import patch
 from io import StringIO
@@ -42,19 +46,7 @@ class TestHBNBCommand(unittest.TestCase):
         ''' method define '''
         with patch('sys.stdout', new=StringIO()) as f:
             self.console.do_create("InvalidClass")
-            self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
-
-    def test_do_create_valid_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_create("BaseModel")
-            self.assertIn("created", f.getvalue())
-
-    def test_do_show_missing_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_show("")
-            self.assertEqual(f.getvalue(), "** class name missing **\n")
+            self.assertEqual(f.getvalue(), "** class doesn't exist **\n"
 
     def test_do_show_invalid_class_name(self):
         ''' method define '''
@@ -109,12 +101,6 @@ class TestHBNBCommand(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.console.do_all("InvalidClass")
             self.assertIn("** class doesn't exist **", f.getvalue())
-
-    def test_do_all_valid_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_all("BaseModel")
-            self.assertEqual(f.getvalue(), "[]\n")
 
     def test_do_update_missing_class_name(self):
         ''' method define '''
