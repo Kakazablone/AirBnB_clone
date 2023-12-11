@@ -31,7 +31,7 @@ class TestAmenity(unittest.TestCase):
 
     def test_name_Type(self):
         '''
-        test ya name 
+        test ya name
         '''
         amenity = Amenity()
         self.assertIs(type(amenity.name), str)

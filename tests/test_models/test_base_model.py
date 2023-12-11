@@ -55,5 +55,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(instance.created_at, new_instance.created_at)
         self.assertEqual(instance.updated_at, new_instance.updated_at)
 
+
 if __name__ == '__main__':
     unittest.main()
