@@ -52,8 +52,7 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("help")
             expected_output = """Documented commands (type help <topic>):
 ========================================
-Amenity    City  Place   State  all     destroy  quit  update
-BaseModel  EOF   Review  User   create  help     show"""
+EOF  all  count  create  destroy  help  quit  show  update  update_list"""
             self.assertEqual(expected_output, f.getvalue().strip())
 
     def test_create_BaseModel_success(self):
