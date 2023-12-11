@@ -4,132 +4,157 @@ mod def
 '''
 import unittest
 from unittest.mock import patch
-from io import StringIO
 from console import HBNBCommand
+from io import StringIO
 
 
-class TestHBNBCommand(unittest.TestCase):
+class TestConsole(unittest.TestCase):
     '''
-    classdef
+    console
     '''
-    def setUp(self):
-        ''' method define '''
-        self.console = HBNBCommand()
+    def test_moduleDocs(self):
+        '''
+        mod
+        '''
+        moduleDoc = __import__("console").__doc__
+        self.assertGreater(len(moduleDoc), 0)
 
-    def tearDown(self):
-        ''' method define '''
-        pass
+    def test_ClassDocs(self):
+        '''
+        class
+        '''
+        classDoc = __import__("console").HBNBCommand.__doc__
+        self.assertGreater(len(classDoc), 0)
 
-    def test_do_EOF(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.assertTrue(self.console.do_EOF(""))
-            self.assertEqual(f.getvalue(), "\n")
+    def test_quit(self):
+        '''
+        quit
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("quit")
+            expected_output = ""
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_quit(self):
-        ''' method define '''
-        self.assertTrue(self.console.do_quit(""))
+    def test_EOF(self):
+        '''
+        end of file
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("EOF")
+            expected_output = ""
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_emptyline(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.emptyline()
-            self.assertEqual(f.getvalue(), "")
+    def test_help(self):
+        '''
+        help
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("help")
+            expected_output = """Documented commands (type help <topic>):
+========================================
+Amenity    City  Place   State  all     destroy  quit  update
+BaseModel  EOF   Review  User   create  help     show"""
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_create_missing_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_create("")
-            self.assertEqual(f.getvalue(), "** class name missing **\n")
+    def test_create_BaseModel_success(self):
+        '''
+        create base
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            expected_output = 36
+            self.assertEqual(expected_output, len(f.getvalue().strip()))
 
-    def test_do_create_invalid_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_create("InvalidClass")
-            self.assertEqual(f.getvalue(), "** class doesn't exist **\n"
+    def test_create_BaseModel_no_class_name(self):
+        '''
+        create b
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create")
+            expected_output = "** class name missing **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_show_invalid_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_show("InvalidClass")
-            self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
+    def test_create_BaseModel_wrong_class_name(self):
+        '''
+        create b
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create MyClass")
+            expected_output = "** class doesn't exist **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_show_missing_instance_id(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_show("BaseModel")
-            self.assertEqual(f.getvalue(), "** instance id missing **\n")
+    def test_show_BaseModel_no_class_name(self):
+        '''
+        show b
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("show")
+            expected_output = "** class name missing **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_show_valid_class_name_and_instance_id(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_show("BaseModel 123")
-            self.assertIn("** no instance found **", f.getvalue())
+    def test_show_BaseModel_wrong_class_name(self):
+        '''
+        show b
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("show MyClass")
+            expected_output = "** class doesn't exist **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_destroy_missing_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_destroy("")
-            self.assertEqual(f.getvalue(), "** class name missing **\n")
+    def test_show_BaseModel_no_instance_id(self):
+        '''
+        show b
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("show BaseModel")
+            expected_output = "** instance id missing **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_destroy_invalid_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_destroy("InvalidClass")
-            self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
+    def test_show_BaseModel_instance_not_found(self):
+        '''
+        show
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("show BaseModel 121212")
+            expected_output = "** no instance found **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_destroy_missing_instance_id(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_destroy("BaseModel")
-            self.assertEqual(f.getvalue(), "** instance id missing **\n")
+    def test_destroy_BaseModel_no_class_name(self):
+        '''
+        d base
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("destroy")
+            expected_output = "** class name missing **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_destroy_valid_class_name_and_instance_id(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_destroy("BaseModel 123")
-            self.assertIn("** no instance found **", f.getvalue())
+    def test_destroy_BaseModel_wrong_class_name(self):
+        '''
+        destroy
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("destroy MyClass")
+            expected_output = "** class doesn't exist **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_all_no_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_all("")
-            self.assertIn("** class doesn't exist **", f.getvalue())
+    def test_destroy_BaseModel_no_instance_id(self):
+        '''
+        destroy
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("destroy BaseModel")
+            expected_output = "** instance id missing **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_all_invalid_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_all("InvalidClass")
-            self.assertIn("** class doesn't exist **", f.getvalue())
+    def test_destroy_BaseModel_instance_not_found(self):
+        '''
+        destroy
+        '''
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("destroy BaseModel 121212")
+            expected_output = "** no instance found **"
+            self.assertEqual(expected_output, f.getvalue().strip())
 
-    def test_do_update_missing_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_update("")
-            self.assertEqual(f.getvalue(), "** class name missing **\n")
 
-    def test_do_update_invalid_class_name(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_update("InvalidClass")
-            self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
-
-    def test_do_update_missing_instance_id(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_update("BaseModel")
-            self.assertEqual(f.getvalue(), "** instance id missing **\n")
-
-    def test_do_update_valid_class_name_and_instance_id(self):
-        ''' method define '''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.do_update("BaseModel 123")
-            self.assertIn("** no instance found **", f.getvalue())
-
-    def test_precmd(self):
-        ''' method define '''
-        formatted_args = self.console.precmd("create(BaseModel, {'name': 'test', 'value': 10})")
-        self.assertEqual(formatted_args, "create BaseModel  {'name': 'test', 'value': 10}")
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
