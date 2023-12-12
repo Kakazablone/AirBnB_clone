@@ -12,7 +12,6 @@ from models import storage
 from models.engine.file_storage import FileStorage
 
 
-
 class TestConsole(unittest.TestCase):
     '''
     console
@@ -159,6 +158,7 @@ EOF  all  count  create  destroy  help  quit  show  update  update_list"""
             expected_output = "** no instance found **"
             self.assertEqual(expected_output, f.getvalue().strip())
 
+
 class TestHBNBCommand_all(unittest.TestCase):
     """Unittests for testing all of the HBNB command interpreter."""
 
@@ -199,6 +199,7 @@ class TestHBNBCommand_all(unittest.TestCase):
             self.assertNotIn("City", output.getvalue().strip())
             self.assertNotIn("Amenity", output.getvalue().strip())
             self.assertNotIn("Review", output.getvalue().strip())
+
 
 class TestHBNBCommand_destroy(unittest.TestCase):
     """Unit tests for testing destroy from the HBNB command interpreter."""
@@ -281,6 +282,7 @@ class TestHBNBCommand_destroy(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd(command))
             self.assertNotIn(obj, storage.all())
 
+
 class TestHBNBCommand_count(unittest.TestCase):
     """Unittests for testing count method of HBNB comand interpreter."""
 
@@ -345,6 +347,7 @@ class TestHBNBCommand_count(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("Review.count()"))
             self.assertEqual("1", output.getvalue().strip())
 
+
 class TestHBNBCommand_show(unittest.TestCase):
     """Unit tests for testing show from the HBNB command interpreter"""
 
@@ -390,6 +393,7 @@ class TestHBNBCommand_show(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("Review.show()"))
             self.assertEqual(correct, output.getvalue().strip())
+
 
 class TestHBNBCommand_update(unittest.TestCase):
     """Unittests for testing update from the HBNB command interpreter."""
