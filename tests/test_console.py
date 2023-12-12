@@ -6,6 +6,11 @@ import unittest
 from unittest.mock import patch
 from console import HBNBCommand
 from io import StringIO
+import os
+import sys
+from models import storage
+from models.engine.file_storage import FileStorage
+
 
 
 class TestConsole(unittest.TestCase):
@@ -153,6 +158,47 @@ EOF  all  count  create  destroy  help  quit  show  update  update_list"""
             HBNBCommand().onecmd("destroy BaseModel 121212")
             expected_output = "** no instance found **"
             self.assertEqual(expected_output, f.getvalue().strip())
+
+class TestHBNBCommand_all(unittest.TestCase):
+    """Unittests for testing all of the HBNB command interpreter."""
+
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "tmp")
+        except IOError:
+            pass
+        FileStorage.__objects = {}
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
+
+    def test_all_objects_dot_notation(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+            self.assertFalse(HBNBCommand().onecmd("create State"))
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            self.assertFalse(HBNBCommand().onecmd("create City"))
+            self.assertFalse(HBNBCommand().onecmd("create Amenity"))
+            self.assertFalse(HBNBCommand().onecmd("create Review"))
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(".all()"))
+            self.assertNotIn("BaseModel", output.getvalue().strip())
+            self.assertNotIn("User", output.getvalue().strip())
+            self.assertNotIn("State", output.getvalue().strip())
+            self.assertNotIn("Place", output.getvalue().strip())
+            self.assertNotIn("City", output.getvalue().strip())
+            self.assertNotIn("Amenity", output.getvalue().strip())
+            self.assertNotIn("Review", output.getvalue().strip())
 
 
 if __name__ == "__main__":
