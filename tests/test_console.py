@@ -10,6 +10,7 @@ import sys
 from io import StringIO
 import re
 import os
+from models import storage
 
 
 class TestConsole(unittest.TestCase):

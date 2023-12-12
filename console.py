@@ -166,13 +166,13 @@ class HBNBCommand(cmd.Cmd):
                                 self.do_show(line)
                             elif action == 'update':
                                 self.do_update(line)
-                            elif action == 'count':
+                            elif action == 'count' and object_id == '':
                                 line = class_name
                                 self.do_count(line)
-                            elif action == 'all':
+                            elif action == 'all' and object_id == '':
                                 line = class_name
                                 self.do_all(line)
-                            elif action == 'create':
+                            elif action == 'create' and object_id == '':
                                 line = class_name
                                 self.do_create(line)
                             else:
