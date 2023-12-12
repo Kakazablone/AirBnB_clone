@@ -154,6 +154,45 @@ EOF  all  count  create  destroy  help  quit  show  update  update_list"""
             expected_output = "** no instance found **"
             self.assertEqual(expected_output, f.getvalue().strip())
 
+     def test_all_single_object_dot_notation(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+            self.assertFalse(HBNBCommand().onecmd("create State"))
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            self.assertFalse(HBNBCommand().onecmd("create City"))
+            self.assertFalse(HBNBCommand().onecmd("create Amenity"))
+            self.assertFalse(HBNBCommand().onecmd("create Review"))
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("BaseModel.all()"))
+            self.assertIn("BaseModel", output.getvalue().strip())
+            self.assertNotIn("User", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("User.all()"))
+            self.assertIn("User", output.getvalue().strip())
+            self.assertNotIn("BaseModel", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("State.all()"))
+            self.assertIn("State", output.getvalue().strip())
+            self.assertNotIn("BaseModel", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("City.all()"))
+            self.assertIn("City", output.getvalue().strip())
+            self.assertNotIn("BaseModel", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("Amenity.all()"))
+            self.assertIn("Amenity", output.getvalue().strip())
+            self.assertNotIn("BaseModel", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("Place.all()"))
+            self.assertIn("Place", output.getvalue().strip())
+            self.assertNotIn("BaseModel", output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("Review.all()"))
+            self.assertIn("Review", output.getvalue().strip())
+            self.assertNotIn("BaseModel", output.getvalue().strip())
+
+
 
 if __name__ == "__main__":
     unittest.main()
