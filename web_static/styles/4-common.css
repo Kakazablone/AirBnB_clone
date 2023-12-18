@@ -6,6 +6,9 @@ body{
   font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: lightpink;
   max-width: 1000px;
   margin: 30px auto;
