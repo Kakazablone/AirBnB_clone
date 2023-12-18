@@ -46,4 +46,22 @@ button:hover{
 }
 .amenities{
   padding-right: 180px;
-  }
+}
+.popover{
+  text-align:left;
+  background-color:#FAFAFA;
+  width: 100%;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  line-height: 1.5;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 1px 0px 3px 0px rgba(0, 0, 0, 0.15);
+}
+ul{
+  list-style-type: none;
+}
+.locations:hover .popover, .amenities:hover .popover{
+  opacity: 1;
+}
+
