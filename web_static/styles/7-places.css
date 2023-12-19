@@ -1,0 +1,38 @@
+.places {
+    text-align: left;
+    vertical-align: top;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.places h1 {
+    font-size: 30px;
+    flex: 100%;
+}
+
+.segment2 {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.Tiny {
+    width: calc(50% - 40px);
+    height: 70px;
+    padding: 10px;
+    margin: 20px;
+    border: 1px solid #FF5A5F;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.Tiny h2 {
+    font-size: 20px;
+    text-align: center;
+}
+
+.suite {
+    width: 100%;
+    text-align: center;
+}
