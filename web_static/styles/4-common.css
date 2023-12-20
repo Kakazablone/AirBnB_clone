@@ -1,16 +1,19 @@
-body{
+body {
     margin: 0px;
     padding: 0px;
     color: #484848;
     font-size: 14px;
-    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.container{
+.container {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     height: auto;
-    background-color: lightblue;
     max-width: 1000px;
     margin: 30px auto;
+}
+
+.container > * {
+    flex-grow: 1;
 }
