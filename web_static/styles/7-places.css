@@ -1,18 +1,21 @@
+.places{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
 .places article {
     border: 1px solid #ff5a5f;
     border-radius: 4px;
-    display: inline-block;
-    margin: 20px;
+    margin: 15px;
     padding: 20px;
     width: 390px;
   }
   
   /* Header 1 */
   .places h1 {
+    width: 100%;
     font-size: 30px;
     font-weight: bold;
-    margin: .67em 0 .67em 0;
-    width: 100%;
   }
   
   /* Header 2 */
